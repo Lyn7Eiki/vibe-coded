@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数字分析 | Vibe</title>
+    <meta name="description" content="分析一组数字的统计信息" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="analyzer-panel">
+        <header class="header">
+          <h1>数字分析</h1>
+        </header>
+
+        <div class="input-section">
+          <div class="input-row">
+            <div class="input-group">
+              <label for="standard">标准值</label>
+              <input
+                type="number"
+                id="standard"
+                value="42"
+                class="standard-input"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="numbers">输入数字（每行一个或用逗号/空格分隔）</label>
+            <textarea
+              id="numbers"
+              rows="8"
+              placeholder="7&#10;6&#10;5&#10;4&#10;5&#10;6&#10;7&#10;8"
+            ></textarea>
+          </div>
+          <button id="analyze-btn" class="btn btn-primary">分析</button>
+        </div>
+
+        <div class="results-section hidden" id="results">
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">数字个数</div>
+              <div class="stat-value" id="count">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">总和</div>
+              <div class="stat-value" id="sum">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">比标准</div>
+              <div class="stat-value" id="diff">0</div>
+            </div>
+          </div>
+
+          <div class="frequency-section">
+            <h3>出现次数</h3>
+            <ul class="frequency-list" id="frequency-list">
+              <!-- Frequency items will be rendered here -->
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <a href="../index.html" class="back-link">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          width="16"
+          height="16"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
+        返回测试
+      </a>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

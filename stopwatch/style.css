@@ -1,0 +1,279 @@
+:root {
+  --primary: #10b981;
+  --primary-hover: #059669;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --bg: #f8fafc;
+  --bg-card: #ffffff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --radius: 24px;
+  --radius-sm: 12px;
+  --transition: 200ms ease-out;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Outfit", system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.stopwatch-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.timer-container {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  position: absolute;
+}
+
+.progress-ring__circle-bg {
+  stroke: var(--border);
+}
+
+.progress-ring__circle {
+  stroke: var(--primary);
+  stroke-dasharray: 817;
+  stroke-dashoffset: 817;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.timer-display {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  letter-spacing: -0.02em;
+}
+
+.colon,
+.dot {
+  margin: 0 0.05em;
+  color: var(--text-muted);
+}
+
+#milliseconds {
+  font-size: 1.75rem;
+  color: var(--text-muted);
+  min-width: 2ch;
+}
+
+.controls {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-round {
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  font-size: 0.875rem;
+}
+
+.btn-round.btn-large {
+  width: 88px;
+  height: 88px;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.btn-primary.running {
+  background-color: var(--danger);
+}
+
+.btn-primary.running:hover {
+  background-color: #dc2626;
+}
+
+.btn-secondary {
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--border);
+}
+
+/* Back Link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+/* Laps */
+.laps-container {
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.laps-list {
+  list-style: none;
+  width: 100%;
+}
+
+.lap-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.lap-number {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.lap-time {
+  font-weight: 600;
+}
+
+.lap-diff {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.lap-item.fastest .lap-time {
+  color: var(--primary);
+}
+
+.lap-item.slowest .lap-time {
+  color: var(--danger);
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .stopwatch-panel {
+    padding: 1.5rem;
+  }
+
+  .timer-container {
+    width: 240px;
+    height: 240px;
+  }
+
+  .timer-display {
+    font-size: 2.5rem;
+  }
+
+  #milliseconds {
+    font-size: 1.5rem;
+  }
+
+  .btn-round {
+    width: 64px;
+    height: 64px;
+  }
+
+  .btn-round.btn-large {
+    width: 76px;
+    height: 76px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-ring__circle {
+    transition: none;
+  }
+}

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>定时器 | Vibe</title>
+    <meta name="description" content="设置倒计时定时器" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="timer-panel">
+        <header class="header">
+          <h1>定时器</h1>
+        </header>
+
+        <div class="timer-container">
+          <svg
+            class="progress-ring"
+            width="280"
+            height="280"
+            aria-hidden="true"
+          >
+            <circle
+              class="progress-ring__circle-bg"
+              stroke-width="8"
+              fill="transparent"
+              r="130"
+              cx="140"
+              cy="140"
+            />
+            <circle
+              class="progress-ring__circle"
+              stroke-width="8"
+              fill="transparent"
+              r="130"
+              cx="140"
+              cy="140"
+            />
+          </svg>
+
+          <div
+            class="timer-display"
+            id="timer-display"
+            role="timer"
+            aria-live="polite"
+          >
+            <div class="time-picker" id="time-picker">
+              <div class="time-input-group">
+                <input
+                  type="number"
+                  id="input-h"
+                  min="0"
+                  max="23"
+                  value="00"
+                  class="time-input"
+                />
+                <span class="time-label">时</span>
+              </div>
+              <span class="time-separator">:</span>
+              <div class="time-input-group">
+                <input
+                  type="number"
+                  id="input-m"
+                  min="0"
+                  max="59"
+                  value="05"
+                  class="time-input"
+                />
+                <span class="time-label">分</span>
+              </div>
+              <span class="time-separator">:</span>
+              <div class="time-input-group">
+                <input
+                  type="number"
+                  id="input-s"
+                  min="0"
+                  max="59"
+                  value="00"
+                  class="time-input"
+                />
+                <span class="time-label">秒</span>
+              </div>
+            </div>
+            <div class="countdown-display hidden" id="countdown-display">
+              <span id="hours">00</span><span class="colon">:</span>
+              <span id="minutes">05</span><span class="colon">:</span>
+              <span id="seconds">00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-times">
+          <button class="quick-btn" data-time="60">1分</button>
+          <button class="quick-btn" data-time="180">3分</button>
+          <button class="quick-btn" data-time="300">5分</button>
+          <button class="quick-btn" data-time="600">10分</button>
+          <button class="quick-btn" data-time="1800">30分</button>
+        </div>
+
+        <div class="controls">
+          <button id="cancel" class="btn btn-secondary btn-round" disabled>
+            取消
+          </button>
+          <button id="start-pause" class="btn btn-primary btn-round btn-large">
+            开始
+          </button>
+        </div>
+      </div>
+
+      <a href="../index.html" class="back-link">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          width="16"
+          height="16"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
+        返回主页
+      </a>
+    </main>
+
+    <!-- Ring Overlay -->
+    <div id="ring-overlay" class="ring-overlay hidden">
+      <div class="ring-content">
+        <div class="ring-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            width="64"
+            height="64"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+            />
+          </svg>
+        </div>
+        <div class="ring-text">时间到！</div>
+        <button id="stop-alarm" class="btn btn-primary btn-large">停止</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

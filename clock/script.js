@@ -42,7 +42,7 @@ class VibeClock {
     let ampm = "";
 
     if (!this.is24Hour) {
-      ampm = h >= 12 ? "下午" : "上午";
+      ampm = this.getTimePeriod(h);
       h = h % 12;
       h = h ? h : 12;
     }
@@ -55,6 +55,16 @@ class VibeClock {
     // Date Format: Chinese
     const options = { weekday: "long", month: "long", day: "numeric" };
     this.dateEl.textContent = now.toLocaleDateString("zh-CN", options);
+  }
+
+  getTimePeriod(hour) {
+    if (hour >= 1 && hour <= 5) return "凌晨";
+    if (hour >= 6 && hour <= 9) return "早上";
+    if (hour >= 10 && hour <= 11) return "上午";
+    if (hour === 12) return "中午";
+    if (hour >= 13 && hour <= 18) return "下午";
+    // 19-23 and 0 (which is 24)
+    return "晚上";
   }
 
   pad(num) {

@@ -1,0 +1,386 @@
+:root {
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --danger: #ef4444;
+  --bg: #f8fafc;
+  --bg-card: #ffffff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --radius: 24px;
+  --radius-sm: 12px;
+  --transition: 200ms ease-out;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Outfit", system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.timer-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.timer-container {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  position: absolute;
+}
+
+.progress-ring__circle-bg {
+  stroke: var(--border);
+}
+
+.progress-ring__circle {
+  stroke: var(--primary);
+  stroke-dasharray: 817;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.timer-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.time-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.time-input {
+  width: 60px;
+  height: 60px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  color: var(--text);
+  transition: border-color var(--transition);
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.time-input::-webkit-inner-spin-button,
+.time-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.time-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.time-separator {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.countdown-display {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.02em;
+}
+
+.countdown-display .colon {
+  margin: 0 0.1em;
+  color: var(--text-muted);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.quick-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.quick-btn {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.quick-btn:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.quick-btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.controls {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-round {
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  font-size: 0.875rem;
+}
+
+.btn-round.btn-large {
+  width: 88px;
+  height: 88px;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.btn-primary.paused {
+  background-color: var(--danger);
+}
+
+.btn-primary.paused:hover {
+  background-color: #dc2626;
+}
+
+.btn-secondary {
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--border);
+}
+
+.btn-large {
+  padding: 1rem 3rem;
+}
+
+/* Back Link */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+/* Ring Overlay */
+.ring-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary), #8b5cf6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+
+.ring-overlay.visible {
+  opacity: 1;
+}
+
+.ring-overlay.hidden {
+  display: none;
+}
+
+.ring-content {
+  text-align: center;
+  color: white;
+}
+
+.ring-icon {
+  animation: ring 0.5s ease-in-out infinite alternate;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes ring {
+  0% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(15deg);
+  }
+}
+
+.ring-text {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.ring-overlay .btn-primary {
+  background: white;
+  color: var(--primary);
+  border-radius: var(--radius-sm);
+}
+
+.ring-overlay .btn-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .timer-panel {
+    padding: 1.5rem;
+  }
+
+  .timer-container {
+    width: 240px;
+    height: 240px;
+  }
+
+  .time-input {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .countdown-display {
+    font-size: 2.5rem;
+  }
+
+  .btn-round {
+    width: 64px;
+    height: 64px;
+  }
+
+  .btn-round.btn-large {
+    width: 76px;
+    height: 76px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring-icon {
+    animation: none;
+  }
+
+  .progress-ring__circle {
+    transition: none;
+  }
+}

@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>番茄 | Vibe</title>
+    <title>秒表 | Vibe</title>
+    <meta name="description" content="精确计时秒表，支持分段记录" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,35 +15,9 @@
   </head>
   <body>
     <main class="container">
-      <div class="pomodoro-panel">
+      <div class="stopwatch-panel">
         <header class="header">
-          <h1>番茄</h1>
-          <div class="mode-switcher" role="tablist">
-            <button
-              class="mode-btn active"
-              data-mode="pomodoro"
-              role="tab"
-              aria-selected="true"
-            >
-              专注
-            </button>
-            <button
-              class="mode-btn"
-              data-mode="shortBreak"
-              role="tab"
-              aria-selected="false"
-            >
-              短休息
-            </button>
-            <button
-              class="mode-btn"
-              data-mode="longBreak"
-              role="tab"
-              aria-selected="false"
-            >
-              长休息
-            </button>
-          </div>
+          <h1>秒表</h1>
         </header>
 
         <div class="timer-container">
@@ -71,39 +46,26 @@
           </svg>
 
           <div class="timer-display" role="timer" aria-live="polite">
-            <span id="minutes">25</span><span class="colon">:</span
-            ><span id="seconds">00</span>
+            <span id="minutes">00</span><span class="colon">:</span
+            ><span id="seconds">00</span><span class="dot">.</span
+            ><span id="milliseconds">00</span>
           </div>
         </div>
 
         <div class="controls">
-          <button id="start-pause" class="btn btn-primary btn-large">
-            开始
+          <button id="lap-reset" class="btn btn-secondary btn-round" disabled>
+            复位
           </button>
-          <button id="reset" class="btn btn-icon" aria-label="重置">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              width="20"
-              height="20"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-              />
-            </svg>
+          <button id="start-stop" class="btn btn-primary btn-round btn-large">
+            开始
           </button>
         </div>
 
-        <footer class="footer">
-          <div class="today-count">
-            今日专注: <span id="pomodoro-count">0</span> 次
-          </div>
-        </footer>
+        <div class="laps-container" id="laps-container">
+          <ul class="laps-list" id="laps-list">
+            <!-- Laps will be rendered here -->
+          </ul>
+        </div>
       </div>
 
       <a href="../index.html" class="back-link">

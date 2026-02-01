@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>智能闹钟 | Vibe</title>
+    <title>闹钟 | Vibe</title>
+    <meta name="description" content="设置多个闹钟，准时提醒您" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,33 +14,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="alarm-app">
-      <header>
-        <h1>闹钟</h1>
-        <div class="current-time" id="current-time">12:00</div>
-      </header>
+    <main class="container">
+      <div class="alarm-panel">
+        <header class="header">
+          <h1>闹钟</h1>
+        </header>
 
-      <ul class="alarm-list" id="alarm-list" role="list">
-        <!-- Alarms injected by JS -->
-      </ul>
+        <div class="alarm-list-container">
+          <ul class="alarm-list" id="alarm-list">
+            <!-- Alarms will be rendered here -->
+          </ul>
+        </div>
 
-      <button class="add-btn" id="add-btn" aria-label="添加闹钟">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          width="24"
-          height="24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2.5"
-            d="M12 4.5v15m7.5-7.5h-15"
-          />
-        </svg>
-      </button>
+        <div class="controls">
+          <button id="add-btn" class="btn btn-primary btn-large">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              width="24"
+              height="24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            添加闹钟
+          </button>
+        </div>
+      </div>
 
       <a href="../index.html" class="back-link">
         <svg
@@ -59,76 +66,69 @@
         </svg>
         返回主页
       </a>
+    </main>
 
-      <!-- Add Alarm Modal -->
-      <div
-        class="modal hidden"
-        id="alarm-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-      >
-        <div class="modal-content">
-          <h2 id="modal-title">设置闹钟</h2>
-          <div class="time-inputs">
+    <!-- Add Alarm Modal -->
+    <div id="alarm-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>设置闹钟</h2>
+        <div class="time-picker">
+          <div class="time-input-group">
             <input
               type="number"
               id="alarm-h"
               min="0"
               max="23"
               value="08"
-              aria-label="小时"
+              class="time-input"
             />
-            <span class="sep">:</span>
+            <span class="time-label">时</span>
+          </div>
+          <span class="time-separator">:</span>
+          <div class="time-input-group">
             <input
               type="number"
               id="alarm-m"
               min="0"
               max="59"
               value="00"
-              aria-label="分钟"
+              class="time-input"
             />
-          </div>
-          <div class="modal-actions">
-            <button id="cancel-alarm" class="btn btn-secondary">取消</button>
-            <button id="save-alarm" class="btn btn-primary">保存</button>
+            <span class="time-label">分</span>
           </div>
         </div>
+        <div class="modal-actions">
+          <button id="cancel-alarm" class="btn btn-secondary">取消</button>
+          <button id="save-alarm" class="btn btn-primary">保存</button>
+        </div>
       </div>
+    </div>
 
-      <!-- Ringing Overlay -->
-      <div
-        class="ring-overlay hidden"
-        id="ring-overlay"
-        role="alertdialog"
-        aria-modal="true"
-      >
-        <div class="ring-content">
-          <div class="bell-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              width="64"
-              height="64"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-              />
-            </svg>
-          </div>
-          <h2>起床啦!</h2>
-          <p id="ring-time">08:00</p>
-          <button id="stop-alarm" class="btn btn-primary btn-large">
-            停止
-          </button>
+    <!-- Ring Overlay -->
+    <div id="ring-overlay" class="ring-overlay hidden">
+      <div class="ring-content">
+        <div class="ring-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            width="64"
+            height="64"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+            />
+          </svg>
         </div>
+        <div class="ring-time" id="ring-time">08:00</div>
+        <div class="ring-text">闹钟响了！</div>
+        <button id="stop-alarm" class="btn btn-primary btn-large">停止</button>
       </div>
-    </main>
+    </div>
 
     <script src="script.js"></script>
   </body>

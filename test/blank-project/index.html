@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>空白项目 | Vibe</title>
+    <title>考勤计算器 | Vibe</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,15 +14,55 @@
   </head>
   <body>
     <main class="container">
-      <div class="blank-panel">
+      <div class="calculator-panel">
         <header class="header">
-          <h1>空白项目</h1>
-          <p>这是一个空白的测试项目模板。</p>
+          <h1>考勤计算器</h1>
+          <p>批量计算工时与连班情况（0.5小时制）</p>
         </header>
 
-        <div class="content-area">
-          <!-- Content goes here -->
-          <div class="placeholder-text">在这里开始你的新想法...</div>
+        <div class="input-area">
+          <label for="input-times">
+            输入打卡记录（每行代表一天，时间空格分隔）
+            <br />
+            <span class="example">例如：08:28 11:39 13:30 16:02</span>
+          </label>
+          <textarea
+            id="input-times"
+            placeholder="08:28 11:39 13:30 16:02&#10;08:30 12:00 12:15 17:30"
+          ></textarea>
+          <div class="actions">
+            <button id="calc-btn" class="btn btn-primary">开始计算</button>
+            <button id="clear-btn" class="btn btn-secondary">清空</button>
+          </div>
+        </div>
+
+        <div class="result-area hidden" id="result-area">
+          <div class="summary-card">
+            <div class="summary-item">
+              <span class="label">总天数</span>
+              <span class="value" id="total-days">0</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">月总工时</span>
+              <span class="value highlight" id="total-hours">0.0</span>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table id="result-table">
+              <thead>
+                <tr>
+                  <th>行号</th>
+                  <th>工时明细</th>
+                  <th>连班情况</th>
+                  <th>日总工时</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Results will be injected here -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 

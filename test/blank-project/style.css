@@ -263,3 +263,10 @@ th:last-child {
 .back-link:hover {
   color: var(--text);
 }
+
+small.next-day {
+  font-size: 0.7em;
+  color: var(--danger);
+  margin-left: 2px;
+  vertical-align: super;
+}

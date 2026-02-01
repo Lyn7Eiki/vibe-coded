@@ -22,13 +22,13 @@
 
         <div class="input-area">
           <label for="input-times">
-            输入打卡记录（每行代表一天，时间空格分隔）
+            输入打卡记录（每行一个班次，按时间顺序输入）
             <br />
-            <span class="example">例如：08:28 11:39 13:30 16:02</span>
+            <span class="example">支持跨天（如 23:50 08:00）和 24:00 格式</span>
           </label>
           <textarea
             id="input-times"
-            placeholder="08:28 11:39 13:30 16:02&#10;08:30 12:00 12:15 17:30"
+            placeholder="08:28 11:39 13:30 16:02 (白班例)&#10;23:50 08:00 (大夜班例，自动识别次日)&#10;16:00 24:00 (小夜班例)"
           ></textarea>
           <div class="actions">
             <button id="calc-btn" class="btn btn-primary">开始计算</button>

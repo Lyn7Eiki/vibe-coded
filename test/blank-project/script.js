@@ -19,12 +19,22 @@ class AttendanceCalculator {
     });
   }
 
+  // Returns { h, m, rawStr } or null
   parseTime(timeStr) {
-    const [h, m] = timeStr.trim().split(":").map(Number);
+    const cleanStr = timeStr.trim();
+    if (cleanStr === "24:00" || cleanStr === "24:0")
+      return { h: 24, m: 0, rawStr: "24:00" };
+
+    const [hStr, mStr] = cleanStr.split(":");
+    const h = parseInt(hStr);
+    const m = parseInt(mStr);
+
     if (isNaN(h) || isNaN(m)) return null;
-    const date = new Date();
-    date.setHours(h, m, 0, 0);
-    return date;
+    return {
+      h,
+      m,
+      rawStr: `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`,
+    };
   }
 
   calculate() {
@@ -38,60 +48,100 @@ class AttendanceCalculator {
     lines.forEach((line, index) => {
       if (!line.trim()) return;
 
-      // Extract times using regex to handle various separators
-      const timeStrings = line.match(/\d{1,2}:\d{2}/g);
+      // Extract times using regex
+      const matches = line.match(/\d{1,2}:\d{2}/g);
 
-      if (!timeStrings || timeStrings.length % 2 !== 0) {
+      if (!matches || matches.length % 2 !== 0) {
         this.renderErrorRow(index + 1, line, "无效的时间记录（必须成对）");
         return;
       }
 
-      const times = timeStrings.map((t) => this.parseTime(t));
-      // Sort times just in case, though user usually provides in order
-      times.sort((a, b) => a - b);
+      // 1. Parse raw times
+      const rawTimes = matches
+        .map((t) => this.parseTime(t))
+        .filter((t) => t !== null);
 
+      if (rawTimes.length !== matches.length) {
+        this.renderErrorRow(index + 1, line, "时间格式解析错误");
+        return;
+      }
+
+      // 2. Convert to linear timeline (minutes) handling day crossing
+      const timePoints = [];
+      let dayOffset = 0;
+      let lastMins = -1;
+
+      rawTimes.forEach((t, i) => {
+        let currentMins = t.h * 60 + t.m;
+
+        // If time goes backward (e.g. 23:50 -> 08:00), assume next day
+        // Special case: 08:00 -> 08:00 (assume 0 duration? or next day 24h?)
+        // Let's assume strictly smaller implies next day for simplicity in shift contexts.
+        if (currentMins < lastMins) {
+          dayOffset += 1440; // Add 24 hours
+        }
+
+        // Also handle explicit 24:00 case logic if needed, but 24:00 (1440) > 23:00 (1380), so logic holds.
+        // What if 24:00 -> 00:10? 1440 -> 10. 10 < 1440. Offset adds. Correct.
+
+        timePoints.push({
+          totalMins: currentMins + dayOffset,
+          display: t.rawStr,
+          isNextDay: dayOffset > 0,
+          originalH: t.h, // used for checking range type
+        });
+
+        lastMins = currentMins;
+      });
+
+      // 3. Calculate sessions
       let dayTotalHours = 0;
       let sessions = [];
       let lianbanTags = [];
 
-      // Process sessions (pairs)
-      for (let i = 0; i < times.length; i += 2) {
-        const start = times[i];
-        const end = times[i + 1];
+      for (let i = 0; i < timePoints.length; i += 2) {
+        const start = timePoints[i];
+        const end = timePoints[i + 1];
 
-        // Calculate duration
-        const diffMs = end - start;
-        const diffMins = Math.floor(diffMs / 60000);
+        // Duration
+        const diffMins = end.totalMins - start.totalMins;
 
-        // Apply 30-min rounding rule
-        // floor(mins / 30) * 0.5
-        const hours = Math.floor(diffMins / 30) * 0.5;
+        // New Rule: Negative duration shouldn't happen with our logic, but safe check
+        const validDiff = Math.max(0, diffMins);
 
+        // Rounding: floor(mins / 30) * 0.5
+        const hours = Math.floor(validDiff / 30) * 0.5;
         dayTotalHours += hours;
 
-        const startStr = `${start.getHours().toString().padStart(2, "0")}:${start.getMinutes().toString().padStart(2, "0")}`;
-        const endStr = `${end.getHours().toString().padStart(2, "0")}:${end.getMinutes().toString().padStart(2, "0")}`;
+        // Display string (add +1 if next day)
+        const formatTime = (t) =>
+          t.isNextDay
+            ? `${t.display}<small class="next-day">+1</small>`
+            : t.display;
 
         sessions.push({
-          startStr,
-          endStr,
-          rawMins: diffMins,
+          startHtml: formatTime(start),
+          endHtml: formatTime(end),
+          rawMins: validDiff,
           calcHours: hours,
         });
 
-        // Check for Lianban with previous session if exists
+        // 4. Lianban Check (Gap between previous end and current start)
         if (i > 0) {
-          const prevEnd = times[i - 1];
+          const prevEnd = timePoints[i - 1];
           const currStart = start;
-          const gapMs = currStart - prevEnd;
-          const gapMins = Math.floor(gapMs / 60000);
+          const gapMins = currStart.totalMins - prevEnd.totalMins;
 
-          if (gapMins <= 30) {
-            // Determine type based on time
-            const hour = prevEnd.getHours();
-            if (hour >= 11 && hour <= 13) {
+          if (gapMins <= 30 && gapMins >= 0) {
+            // Check time range based on prevEnd time (mod 1440 to handle Day 2 noon)
+            // Noon: 11:00 (660) - 13:00 (780)
+            // Evening: 16:00 (960) - 19:00 (1140)
+
+            const checkMins = prevEnd.totalMins % 1440;
+
+            if (checkMins >= 660 && checkMins <= 840) {
               lianbanTags.push({ text: "中午连班", type: "noon" });
-            } else if (hour >= 16 && hour <= 19) {
+            } else if (checkMins >= 960 && checkMins <= 1140) {
               lianbanTags.push({ text: "晚上连班", type: "evening" });
             } else {
               lianbanTags.push({ text: "连班", type: "other" });
@@ -118,7 +168,7 @@ class AttendanceCalculator {
       .map(
         (s) =>
           `<div class="tag session">
-        ${s.startStr}-${s.endStr} (${s.rawMins}分) -> <b>${s.calcHours}h</b>
+        ${s.startHtml}-${s.endHtml} (${s.rawMins}分) -> <b>${s.calcHours}h</b>
        </div>`,
       )
       .join("");

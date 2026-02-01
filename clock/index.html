@@ -3,57 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vibe 时钟</title>
+    <title>极简时钟 | Vibe</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700;800&family=Noto+Sans+SC:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="app-background"></div>
-
-    <main class="clock-container">
-      <div class="clock-content">
+    <main class="container">
+      <div class="clock-panel">
         <div class="time-display">
           <span id="hours">12</span><span class="colon">:</span
           ><span id="minutes">00</span><span class="colon">:</span
           ><span id="seconds">00</span>
           <span id="ampm" class="ampm">上午</span>
         </div>
-        <div class="date-display" id="date">1月1日 星期一</div>
+        <div class="date-display" id="date">2026年2月1日 星期日</div>
 
         <div class="controls">
-          <button id="format-toggle" class="icon-btn" aria-label="切换时间格式">
-            24小时制
+          <button id="format-toggle" class="btn-secondary">
+            <span id="format-text">24小时制</span>
           </button>
         </div>
       </div>
 
-      <!-- Back Link -->
-      <a href="../index.html" class="back-link">返回主页</a>
+      <a href="../index.html" class="back-link">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          width="16"
+          height="16"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
+        返回主页
+      </a>
     </main>
 
     <script src="script.js"></script>
-    <style>
-      /* Add minimal style for back link if not present in main css */
-      .back-link {
-        display: block;
-        margin-top: 30px;
-        color: rgba(255, 255, 255, 0.4);
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: color 0.3s;
-      }
-      .back-link:hover {
-        color: white;
-      }
-      /* Update Font family to include Chinese support */
-      body {
-        font-family: "Outfit", "Noto Sans SC", sans-serif;
-      }
-    </style>
   </body>
 </html>

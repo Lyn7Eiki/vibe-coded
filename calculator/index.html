@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>简易计算 | Vibe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="calculator-panel">
+        <div class="display-container">
+          <input
+            type="text"
+            id="display"
+            readonly
+            value="0"
+            aria-label="计算结果"
+          />
+        </div>
+
+        <div class="keypad" role="group" aria-label="计算器按键">
+          <button class="btn btn-func" data-action="parenthesis-open">(</button>
+          <button class="btn btn-func" data-action="parenthesis-close">
+            )
+          </button>
+          <button class="btn btn-func" data-action="percent">%</button>
+          <button class="btn btn-ac" data-action="clear">AC</button>
+          <button class="btn btn-num" data-value="7">7</button>
+          <button class="btn btn-num" data-value="8">8</button>
+          <button class="btn btn-num" data-value="9">9</button>
+          <button class="btn btn-op" data-action="divide">÷</button>
+          <button class="btn btn-num" data-value="4">4</button>
+          <button class="btn btn-num" data-value="5">5</button>
+          <button class="btn btn-num" data-value="6">6</button>
+          <button class="btn btn-op" data-action="multiply">×</button>
+          <button class="btn btn-num" data-value="1">1</button>
+          <button class="btn btn-num" data-value="2">2</button>
+          <button class="btn btn-num" data-value="3">3</button>
+          <button class="btn btn-op" data-action="subtract">−</button>
+          <button class="btn btn-num" data-value="0">0</button>
+          <button class="btn btn-num" data-value=".">.</button>
+          <button class="btn btn-eq" data-action="calculate">=</button>
+          <button class="btn btn-op" data-action="add">+</button>
+        </div>
+      </div>
+      <a href="../index.html" class="back-link">返回主页</a>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>

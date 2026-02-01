@@ -7,216 +7,227 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-        --glass-bg: rgba(255, 255, 255, 0.08);
-        --glass-border: rgba(255, 255, 255, 0.1);
-        --glass-hover: rgba(255, 255, 255, 0.15);
-        --text-primary: #ffffff;
-        --text-secondary: rgba(255, 255, 255, 0.7);
-        --accent-glow: 0 0 20px rgba(100, 200, 255, 0.2);
+        --primary: #3b82f6;
+        --primary-light: #60a5fa;
+        --cta: #f97316;
+        --bg: #f8fafc;
+        --bg-card: #ffffff;
+        --text: #1e293b;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+        --shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        --shadow-lg:
+          0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        --radius: 16px;
+        --transition: 200ms ease-out;
       }
 
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
       }
 
       body {
-        font-family: "Noto Sans SC", sans-serif;
-        background: var(--bg-gradient);
-        background-attachment: fixed;
-        color: var(--text-primary);
+        font-family: "Outfit", system-ui, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        overflow-x: hidden;
-      }
-
-      .background-orb {
-        position: absolute;
-        width: 50vw;
-        height: 50vw;
-        background: radial-gradient(
-          circle,
-          rgba(76, 0, 255, 0.15) 0%,
-          transparent 70%
-        );
-        border-radius: 50%;
-        top: -20%;
-        left: -10%;
-        z-index: -1;
-        animation: float 10s ease-in-out infinite;
-      }
-
-      .background-orb:nth-child(2) {
-        top: auto;
-        bottom: -20%;
-        left: auto;
-        right: -10%;
-        background: radial-gradient(
-          circle,
-          rgba(255, 0, 100, 0.1) 0%,
-          transparent 70%
-        );
-        animation-delay: -5s;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(20px);
-        }
+        padding: 1rem;
       }
 
       header {
         text-align: center;
         margin-bottom: 3rem;
-        z-index: 1;
       }
 
       h1 {
         font-size: 2.5rem;
-        font-weight: 300;
-        letter-spacing: 2px;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      }
-
-      .subtitle {
-        font-size: 1rem;
-        color: var(--text-secondary);
-        font-weight: 300;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.025em;
       }
 
       .app-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 1.5rem;
-        width: 90%;
-        max-width: 600px;
-        z-index: 1;
+        gap: 1rem;
+        width: 100%;
+        max-width: 640px;
       }
 
       .app-card {
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        border-radius: 24px;
-        padding: 2rem 1.5rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem 1rem;
         text-decoration: none;
-        color: var(--text-primary);
+        color: var(--text);
         display: flex;
         flex-direction: column;
         align-items: center;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .app-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.1) 0%,
-          transparent 100%
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        gap: 0.75rem;
+        transition:
+          transform var(--transition),
+          box-shadow var(--transition);
+        cursor: pointer;
       }
 
       .app-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        background: var(--glass-hover);
-        box-shadow:
-          0 15px 35px rgba(0, 0, 0, 0.3),
-          var(--accent-glow);
-        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
       }
 
-      .app-card:hover::before {
-        opacity: 1;
+      .app-card:focus {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
       }
 
       .icon-container {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
-        transition: transform 0.3s ease;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+        border-radius: 12px;
+        color: var(--primary);
       }
 
-      .app-card:hover .icon-container {
-        transform: scale(1.1) rotate(5deg);
+      .icon-container svg {
+        width: 24px;
+        height: 24px;
+        stroke-width: 1.5;
       }
 
       .app-name {
-        font-size: 1.1rem;
-        font-weight: 500;
-        margin-bottom: 0.2rem;
-      }
-
-      .app-desc {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        text-align: center;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text);
       }
 
       footer {
-        margin-top: 4rem;
-        font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.3);
+        margin-top: 3rem;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .app-card {
+          transition: none;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="background-orb"></div>
-    <div class="background-orb"></div>
-
     <header>
       <h1>Vibe 空间</h1>
-      <div class="subtitle">您的个人效率中心</div>
     </header>
 
     <div class="app-grid">
       <a href="clock/index.html" class="app-card">
-        <div class="icon-container">🕰️</div>
-        <div class="app-name">极简时钟</div>
-        <div class="app-desc">优雅的时间显示</div>
+        <div class="icon-container">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </div>
+        <span class="app-name">极简时钟</span>
       </a>
 
       <a href="alarm/index.html" class="app-card">
-        <div class="icon-container">🔔</div>
-        <div class="app-name">智能闹钟</div>
-        <div class="app-desc">准时唤醒每一天</div>
+        <div class="icon-container">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+            />
+          </svg>
+        </div>
+        <span class="app-name">智能闹钟</span>
       </a>
 
       <a href="doro/index.html" class="app-card">
-        <div class="icon-container">🍅</div>
-        <div class="app-name">番茄专注</div>
-        <div class="app-desc">保持高效心流</div>
+        <div class="icon-container">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            />
+          </svg>
+        </div>
+        <span class="app-name">番茄专注</span>
       </a>
 
       <a href="calendar/index.html" class="app-card">
-        <div class="icon-container">📅</div>
-        <div class="app-name">简约日历</div>
-        <div class="app-desc">查看日期规划</div>
+        <div class="icon-container">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+            />
+          </svg>
+        </div>
+        <span class="app-name">简约日历</span>
+      </a>
+
+      <a href="calculator/index.html" class="app-card">
+        <div class="icon-container">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z"
+            />
+          </svg>
+        </div>
+        <span class="app-name">简易计算</span>
       </a>
     </div>
 

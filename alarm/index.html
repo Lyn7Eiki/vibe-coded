@@ -3,59 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vibe 闹钟</title>
+    <title>智能闹钟 | Vibe</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="app-background"></div>
-
     <main class="alarm-app">
       <header>
-        <div class="current-time" id="current-time">12:00</div>
         <h1>闹钟</h1>
+        <div class="current-time" id="current-time">12:00</div>
       </header>
 
-      <ul class="alarm-list" id="alarm-list">
-        <!-- Alarms will be injected here -->
+      <ul class="alarm-list" id="alarm-list" role="list">
+        <!-- Alarms injected by JS -->
       </ul>
 
       <button class="add-btn" id="add-btn" aria-label="添加闹钟">
         <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
           width="24"
           height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="3"
         >
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+            d="M12 4.5v15m7.5-7.5h-15"
+          />
         </svg>
       </button>
 
-      <!-- Back Link -->
-      <div style="text-align: center; padding: 20px">
-        <a href="../index.html" class="back-link">返回主页</a>
-      </div>
+      <a href="../index.html" class="back-link">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          width="16"
+          height="16"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
+        返回主页
+      </a>
 
       <!-- Add Alarm Modal -->
-      <div class="modal hidden" id="alarm-modal">
+      <div
+        class="modal hidden"
+        id="alarm-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
         <div class="modal-content">
-          <h2>设置闹钟</h2>
+          <h2 id="modal-title">设置闹钟</h2>
           <div class="time-inputs">
             <input
               type="number"
               id="alarm-h"
               min="0"
               max="23"
-              placeholder="00"
               value="08"
+              aria-label="小时"
             />
             <span class="sep">:</span>
             <input
@@ -63,43 +85,51 @@
               id="alarm-m"
               min="0"
               max="59"
-              placeholder="00"
               value="00"
+              aria-label="分钟"
             />
           </div>
           <div class="modal-actions">
-            <button id="cancel-alarm" class="btn secondary">取消</button>
-            <button id="save-alarm" class="btn primary">保存</button>
+            <button id="cancel-alarm" class="btn btn-secondary">取消</button>
+            <button id="save-alarm" class="btn btn-primary">保存</button>
           </div>
         </div>
       </div>
 
       <!-- Ringing Overlay -->
-      <div class="ring-overlay hidden" id="ring-overlay">
+      <div
+        class="ring-overlay hidden"
+        id="ring-overlay"
+        role="alertdialog"
+        aria-modal="true"
+      >
         <div class="ring-content">
-          <div class="bell-animation">🔔</div>
+          <div class="bell-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              width="64"
+              height="64"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+              />
+            </svg>
+          </div>
           <h2>起床啦!</h2>
           <p id="ring-time">08:00</p>
-          <button id="stop-alarm" class="btn primary large">停止</button>
+          <button id="stop-alarm" class="btn btn-primary btn-large">
+            停止
+          </button>
         </div>
       </div>
     </main>
 
     <script src="script.js"></script>
-    <style>
-      body {
-        font-family: "Outfit", "Noto Sans SC", sans-serif;
-      }
-      .back-link {
-        color: rgba(255, 255, 255, 0.4);
-        text-decoration: none;
-        font-size: 0.9rem;
-      }
-      h1,
-      h2,
-      .btn {
-        font-family: "Noto Sans SC", sans-serif;
-      }
-    </style>
   </body>
 </html>

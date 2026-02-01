@@ -152,7 +152,13 @@ class AttendanceCalculator {
 
       validDays++;
       totalMonthHours += dayTotalHours;
-      this.renderRow(index + 1, sessions, lianbanTags, dayTotalHours);
+      this.renderRow(
+        index + 1,
+        sessions,
+        lianbanTags,
+        dayTotalHours,
+        timePoints.length,
+      );
     });
 
     this.totalDaysEl.textContent = validDays;
@@ -160,7 +166,7 @@ class AttendanceCalculator {
     this.resultArea.classList.remove("hidden");
   }
 
-  renderRow(index, sessions, tags, total) {
+  renderRow(index, sessions, tags, total, count) {
     const tr = document.createElement("tr");
 
     // Sessions HTML
@@ -190,9 +196,10 @@ class AttendanceCalculator {
 
     tr.innerHTML = `
       <td>${index}</td>
+      <td style="text-align:center; font-weight:bold; color:#64748b">打卡${count}次</td>
       <td>${sessionsHtml}</td>
       <td>${tagsHtml}</td>
-      <td class="total-cell">${total} h</td>
+      <td class="total-cell">工时${total}小时</td>
     `;
 
     this.resultTableBody.appendChild(tr);
@@ -203,7 +210,7 @@ class AttendanceCalculator {
     tr.style.background = "#fff1f2";
     tr.innerHTML = `
       <td>${index}</td>
-      <td colspan="3" style="color:#e11d48">
+      <td colspan="4" style="color:#e11d48">
         <b>错误:</b> ${msg}<br>
         <span style="font-size:0.8em; color:#888">${content}</span>
       </td>

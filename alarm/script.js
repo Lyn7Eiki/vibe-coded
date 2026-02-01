@@ -27,7 +27,6 @@ class VibeAlarm {
     this.renderAlarms();
     this.setupEventListeners();
 
-    // Clock loop
     setInterval(() => {
       this.updateClock();
       this.checkAlarms();
@@ -52,7 +51,6 @@ class VibeAlarm {
       this.stopAlarm();
     });
 
-    // Close modal on outside click
     this.modal.addEventListener("click", (e) => {
       if (e.target === this.modal) this.closeModal();
     });
@@ -60,7 +58,7 @@ class VibeAlarm {
 
   updateClock() {
     const now = new Date();
-    const timeStr = now.toLocaleTimeString("en-US", {
+    const timeStr = now.toLocaleTimeString("zh-CN", {
       hour12: false,
       hour: "2-digit",
       minute: "2-digit",
@@ -70,16 +68,27 @@ class VibeAlarm {
 
   renderAlarms() {
     this.listEl.innerHTML = "";
+    if (this.alarms.length === 0) {
+      this.listEl.innerHTML =
+        '<li style="text-align:center; color:rgba(255,255,255,0.3); padding-top:20px;">暂无闹钟</li>';
+      return;
+    }
+
     this.alarms.forEach((alarm, index) => {
       const li = document.createElement("li");
       li.className = "alarm-item";
+      // Use local terminology for status if needed, but On/Off toggle is visual.
+      // We'll keep the text minimal "开启" "关闭" if we want, or just rely on global switch.
+      // Let's use Chinese for the secondary text.
+      const statusText = alarm.isActive ? "已开启" : "已关闭";
+
       li.innerHTML = `
                 <div class="alarm-info">
                     <div class="alarm-time">
                         ${alarm.h.toString().padStart(2, "0")}:${alarm.m.toString().padStart(2, "0")}
                     </div>
                     <div class="alarm-label">
-                     ${alarm.isActive ? "On" : "Off"}
+                     ${statusText}
                     </div>
                 </div>
                 <label class="switch">
@@ -87,11 +96,6 @@ class VibeAlarm {
                     <span class="slider"></span>
                 </label>
             `;
-
-      // Delete on long press or button (simplified: just toggle for now, maybe add delete button)
-      // For simplicity, let's just create a delete btn
-      // Actually, let's keep it simple: Toggle wraps functionality.
-      // A long press could delete, but let's add a small x button
 
       const deleteBtn = document.createElement("button");
       deleteBtn.innerHTML = "×";
@@ -115,9 +119,11 @@ class VibeAlarm {
   }
 
   deleteAlarm(index) {
-    this.alarms.splice(index, 1);
-    this.saveToStorage();
-    this.renderAlarms();
+    if (confirm("确定要删除这个闹钟吗？")) {
+      this.alarms.splice(index, 1);
+      this.saveToStorage();
+      this.renderAlarms();
+    }
   }
 
   openModal() {
@@ -126,7 +132,6 @@ class VibeAlarm {
     this.inputM.value = now.getMinutes().toString().padStart(2, "0");
 
     this.modal.classList.remove("hidden");
-    // Force reflow
     void this.modal.offsetWidth;
     this.modal.classList.add("visible");
   }
@@ -142,7 +147,6 @@ class VibeAlarm {
     let h = parseInt(this.inputH.value);
     let m = parseInt(this.inputM.value);
 
-    // Validation
     if (isNaN(h) || h < 0 || h > 23) h = 0;
     if (isNaN(m) || m < 0 || m > 59) m = 0;
 
@@ -150,7 +154,7 @@ class VibeAlarm {
       h,
       m,
       isActive: true,
-      id: Date.now(), // unique ID for tracking ring state if needed
+      id: Date.now(),
     });
 
     this.saveToStorage();
@@ -170,7 +174,7 @@ class VibeAlarm {
     const m = now.getMinutes();
     const s = now.getSeconds();
 
-    if (s !== 0) return; // Only check on the minute mark
+    if (s !== 0) return;
 
     const matchingAlarm = this.alarms.find(
       (a) => a.isActive && a.h === h && a.m === m,
@@ -199,7 +203,6 @@ class VibeAlarm {
     this.stopSound();
   }
 
-  // Audio Engine
   startSound() {
     if (this.audioCtx.state === "suspended") this.audioCtx.resume();
 
@@ -207,7 +210,7 @@ class VibeAlarm {
       const osc = this.audioCtx.createOscillator();
       const gain = this.audioCtx.createGain();
 
-      osc.frequency.value = 880; // A5
+      osc.frequency.value = 880;
       osc.connect(gain);
       gain.connect(this.audioCtx.destination);
 
@@ -223,7 +226,7 @@ class VibeAlarm {
     playBeep();
     this.ringInterval = setInterval(() => {
       playBeep();
-    }, 1000); // Beep every second
+    }, 1000);
   }
 
   stopSound() {

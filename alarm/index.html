@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vibe Alarm</title>
+    <title>Vibe 闹钟</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -18,14 +18,14 @@
     <main class="alarm-app">
       <header>
         <div class="current-time" id="current-time">12:00</div>
-        <h1>Alarms</h1>
+        <h1>闹钟</h1>
       </header>
 
       <ul class="alarm-list" id="alarm-list">
         <!-- Alarms will be injected here -->
       </ul>
 
-      <button class="add-btn" id="add-btn" aria-label="Add Alarm">
+      <button class="add-btn" id="add-btn" aria-label="添加闹钟">
         <svg
           width="24"
           height="24"
@@ -39,10 +39,15 @@
         </svg>
       </button>
 
+      <!-- Back Link -->
+      <div style="text-align: center; padding: 20px">
+        <a href="../index.html" class="back-link">返回主页</a>
+      </div>
+
       <!-- Add Alarm Modal -->
       <div class="modal hidden" id="alarm-modal">
         <div class="modal-content">
-          <h2>Set Alarm</h2>
+          <h2>设置闹钟</h2>
           <div class="time-inputs">
             <input
               type="number"
@@ -63,8 +68,8 @@
             />
           </div>
           <div class="modal-actions">
-            <button id="cancel-alarm" class="btn secondary">Cancel</button>
-            <button id="save-alarm" class="btn primary">Save</button>
+            <button id="cancel-alarm" class="btn secondary">取消</button>
+            <button id="save-alarm" class="btn primary">保存</button>
           </div>
         </div>
       </div>
@@ -73,13 +78,28 @@
       <div class="ring-overlay hidden" id="ring-overlay">
         <div class="ring-content">
           <div class="bell-animation">🔔</div>
-          <h2>Wake Up!</h2>
+          <h2>起床啦!</h2>
           <p id="ring-time">08:00</p>
-          <button id="stop-alarm" class="btn primary large">STOP</button>
+          <button id="stop-alarm" class="btn primary large">停止</button>
         </div>
       </div>
     </main>
 
     <script src="script.js"></script>
+    <style>
+      body {
+        font-family: "Outfit", "Noto Sans SC", sans-serif;
+      }
+      .back-link {
+        color: rgba(255, 255, 255, 0.4);
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+      h1,
+      h2,
+      .btn {
+        font-family: "Noto Sans SC", sans-serif;
+      }
+    </style>
   </body>
 </html>

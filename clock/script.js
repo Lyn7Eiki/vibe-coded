@@ -14,7 +14,7 @@ class VibeClock {
 
   init() {
     this.setupEventListeners();
-    this.updateClock(); // Immediate update
+    this.updateClock();
     setInterval(() => this.updateClock(), 1000);
     this.updateFormatButton();
   }
@@ -29,7 +29,7 @@ class VibeClock {
   }
 
   updateFormatButton() {
-    this.formatToggleBtn.textContent = this.is24Hour ? "12H Mode" : "24H Mode";
+    this.formatToggleBtn.textContent = this.is24Hour ? "12小时制" : "24小时制";
     this.ampmEl.style.display = this.is24Hour ? "none" : "inline-block";
   }
 
@@ -42,9 +42,9 @@ class VibeClock {
     let ampm = "";
 
     if (!this.is24Hour) {
-      ampm = h >= 12 ? "PM" : "AM";
+      ampm = h >= 12 ? "下午" : "上午";
       h = h % 12;
-      h = h ? h : 12; // 0 should be 12
+      h = h ? h : 12;
     }
 
     this.hoursEl.textContent = this.pad(h);
@@ -52,9 +52,9 @@ class VibeClock {
     this.secondsEl.textContent = this.pad(s);
     this.ampmEl.textContent = ampm;
 
-    // Date Format: Monday, January 1
+    // Date Format: Chinese
     const options = { weekday: "long", month: "long", day: "numeric" };
-    this.dateEl.textContent = now.toLocaleDateString("en-US", options);
+    this.dateEl.textContent = now.toLocaleDateString("zh-CN", options);
   }
 
   pad(num) {

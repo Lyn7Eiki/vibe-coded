@@ -1,118 +1,225 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vibe Coded Apps</title>
+    <title>Vibe 空间</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg-color: #0f0f13;
-        --text-color: #ffffff;
-        --accent-color: #7000ff;
-        --card-bg: rgba(255, 255, 255, 0.05);
-        --card-hover: rgba(255, 255, 255, 0.1);
+        --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        --glass-bg: rgba(255, 255, 255, 0.08);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --glass-hover: rgba(255, 255, 255, 0.15);
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.7);
+        --accent-glow: 0 0 20px rgba(100, 200, 255, 0.2);
       }
 
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
       }
 
       body {
-        font-family: "Outfit", sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-color);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        font-family: "Noto Sans SC", sans-serif;
+        background: var(--bg-gradient);
+        background-attachment: fixed;
+        color: var(--text-primary);
         min-height: 100vh;
-      }
-
-      .container {
-        text-align: center;
-        width: 90%;
-        max-width: 800px;
-      }
-
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 3rem;
-        background: linear-gradient(135deg, #fff 0%, #a5a5a5 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        letter-spacing: -1px;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-      }
-
-      .card {
-        background: var(--card-bg);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 2rem;
-        text-decoration: none;
-        color: white;
-        transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        justify-content: center;
+        overflow-x: hidden;
       }
 
-      .card:hover {
-        background: var(--card-hover);
-        transform: translateY(-5px);
-        border-color: rgba(255, 255, 255, 0.3);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      .background-orb {
+        position: absolute;
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(
+          circle,
+          rgba(76, 0, 255, 0.15) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        top: -20%;
+        left: -10%;
+        z-index: -1;
+        animation: float 10s ease-in-out infinite;
       }
 
-      .icon {
-        font-size: 3rem;
+      .background-orb:nth-child(2) {
+        top: auto;
+        bottom: -20%;
+        left: auto;
+        right: -10%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 0, 100, 0.1) 0%,
+          transparent 70%
+        );
+        animation-delay: -5s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(20px);
+        }
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+        z-index: 1;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 300;
+        letter-spacing: 2px;
         margin-bottom: 0.5rem;
+        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       }
 
-      .card h2 {
-        font-size: 1.5rem;
-        font-weight: 600;
+      .subtitle {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        font-weight: 300;
       }
 
-      .card p {
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.6);
+      .app-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1.5rem;
+        width: 90%;
+        max-width: 600px;
+        z-index: 1;
+      }
+
+      .app-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 2rem 1.5rem;
+        text-decoration: none;
+        color: var(--text-primary);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .app-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .app-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        background: var(--glass-hover);
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.3),
+          var(--accent-glow);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .app-card:hover::before {
+        opacity: 1;
+      }
+
+      .icon-container {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+        transition: transform 0.3s ease;
+      }
+
+      .app-card:hover .icon-container {
+        transform: scale(1.1) rotate(5deg);
+      }
+
+      .app-name {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+      }
+
+      .app-desc {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-align: center;
+      }
+
+      footer {
+        margin-top: 4rem;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.3);
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Vibe Coded</h1>
-      <div class="grid">
-        <a href="clock/index.html" class="card">
-          <div class="icon">🕰️</div>
-          <h2>Clock</h2>
-          <p>Minimalist Digital Clock</p>
-        </a>
-        <a href="alarm/index.html" class="card">
-          <div class="icon">🔔</div>
-          <h2>Alarm</h2>
-          <p>Simple Alarm Manager</p>
-        </a>
-        <a href="doro/index.html" class="card">
-          <div class="icon">🍅</div>
-          <h2>Doro</h2>
-          <p>Focus Pomodoro Timer</p>
-        </a>
-      </div>
+    <div class="background-orb"></div>
+    <div class="background-orb"></div>
+
+    <header>
+      <h1>Vibe 空间</h1>
+      <div class="subtitle">您的个人效率中心</div>
+    </header>
+
+    <div class="app-grid">
+      <a href="clock/index.html" class="app-card">
+        <div class="icon-container">🕰️</div>
+        <div class="app-name">极简时钟</div>
+        <div class="app-desc">优雅的时间显示</div>
+      </a>
+
+      <a href="alarm/index.html" class="app-card">
+        <div class="icon-container">🔔</div>
+        <div class="app-name">智能闹钟</div>
+        <div class="app-desc">准时唤醒每一天</div>
+      </a>
+
+      <a href="doro/index.html" class="app-card">
+        <div class="icon-container">🍅</div>
+        <div class="app-name">番茄专注</div>
+        <div class="app-desc">保持高效心流</div>
+      </a>
+
+      <a href="calendar/index.html" class="app-card">
+        <div class="icon-container">📅</div>
+        <div class="app-name">简约日历</div>
+        <div class="app-desc">查看日期规划</div>
+      </a>
     </div>
+
+    <footer>&copy; 2026 Vibe Coded</footer>
   </body>
 </html>

@@ -67,7 +67,8 @@ h1 {
   flex: 1;
   overflow-y: auto;
   list-style: none;
-  padding-bottom: 80px;
+  list-style: none;
+  padding-bottom: 20px;
 }
 
 .alarm-item {
@@ -150,11 +151,8 @@ input:checked + .slider:before {
 }
 
 /* Add Button */
+/* Add Button */
 .add-btn {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -167,10 +165,12 @@ input:checked + .slider:before {
   justify-content: center;
   align-items: center;
   transition: transform 0.2s;
+  margin: 0 auto 20px auto;
+  flex-shrink: 0;
 }
 
 .add-btn:active {
-  transform: translateX(-50%) scale(0.9);
+  transform: scale(0.9);
 }
 
 /* Modal */

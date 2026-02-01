@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibe 日历</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-background"></div>
+
+    <main class="calendar-app">
+      <header class="calendar-header">
+        <h1 id="current-date">2026年 2月</h1>
+        <div class="nav-controls">
+          <button id="prev-month" aria-label="上个月">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button id="today-btn">今天</button>
+          <button id="next-month" aria-label="下个月">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="calendar-grid">
+        <div class="weekdays">
+          <div>日</div>
+          <div>一</div>
+          <div>二</div>
+          <div>三</div>
+          <div>四</div>
+          <div>五</div>
+          <div>六</div>
+        </div>
+        <div class="days" id="days-container">
+          <!-- Days injected by JS -->
+        </div>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../index.html" class="back-link">返回主页</a>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

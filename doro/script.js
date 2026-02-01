@@ -12,9 +12,9 @@ class PomodoroClock {
 
     // Constants
     this.MODES = {
-      pomodoro: { time: 25, color: "0, 90%, 65%" },
-      shortBreak: { time: 5, color: "170, 75%, 45%" },
-      longBreak: { time: 15, color: "210, 85%, 60%" },
+      pomodoro: { time: 25, color: "hsl(0, 90%, 65%)" },
+      shortBreak: { time: 5, color: "hsl(170, 75%, 45%)" },
+      longBreak: { time: 15, color: "hsl(210, 85%, 60%)" },
     };
 
     // State
@@ -183,7 +183,7 @@ class PomodoroClock {
     this.minEl.textContent = minutes.toString().padStart(2, "0");
     this.secEl.textContent = seconds.toString().padStart(2, "0");
 
-    document.title = `(${timeString}) Focus Flow`;
+    // document.title = `(${timeString}) Focus Flow`;
   }
 
   setProgress(percent) {

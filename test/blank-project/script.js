@@ -90,11 +90,11 @@ class AttendanceCalculator {
             // Determine type based on time
             const hour = prevEnd.getHours();
             if (hour >= 11 && hour <= 13) {
-              lianbanTags.push("中午连班");
+              lianbanTags.push({ text: "中午连班", type: "noon" });
             } else if (hour >= 16 && hour <= 19) {
-              lianbanTags.push("晚上连班");
+              lianbanTags.push({ text: "晚上连班", type: "evening" });
             } else {
-              lianbanTags.push("连班");
+              lianbanTags.push({ text: "连班", type: "other" });
             }
           }
         }
@@ -126,7 +126,16 @@ class AttendanceCalculator {
     // Tags HTML
     const tagsHtml =
       tags.length > 0
-        ? tags.map((t) => `<span class="tag lianban">${t}</span>`).join("")
+        ? tags
+            .map((t) => {
+              let className = "tag ";
+              if (t.type === "noon") className += "lianban-noon";
+              else if (t.type === "evening") className += "lianban-evening";
+              else className += "lianban";
+
+              return `<span class="${className}">${t.text}</span>`;
+            })
+            .join("")
         : "<span style='color:#ccc'>无</span>";
 
     tr.innerHTML = `

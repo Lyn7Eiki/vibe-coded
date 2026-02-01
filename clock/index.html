@@ -3,12 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Digital Clock</title>
-    <script type="module" crossorigin src="index.js"></script>
-    <link rel="stylesheet" crossorigin href="index.css">
+    <title>Vibe Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="root"></div>
+    <div class="app-background"></div>
 
+    <main class="clock-container">
+      <div class="clock-content">
+        <div class="time-display">
+          <span id="hours">12</span><span class="colon">:</span
+          ><span id="minutes">00</span><span class="colon">:</span
+          ><span id="seconds">00</span>
+          <span id="ampm" class="ampm">AM</span>
+        </div>
+        <div class="date-display" id="date">Monday, January 1st</div>
+
+        <div class="controls">
+          <button
+            id="format-toggle"
+            class="icon-btn"
+            aria-label="Toggle 12/24 Hour Format"
+          >
+            24H
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
   </body>
 </html>

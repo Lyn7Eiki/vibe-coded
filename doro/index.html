@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focus Flow | 极简番茄钟</title>
+    <meta
+      name="description"
+      content="一个优雅、现代的番茄钟应用，帮助您保持专注。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ff6b6b'/></svg>"
+    />
+  </head>
+  <body>
+    <div class="app-background"></div>
+
+    <main class="main-container">
+      <header class="header">
+        <h1>Focus Flow</h1>
+        <div class="mode-switcher">
+          <button
+            class="mode-btn active"
+            data-mode="pomodoro"
+            id="btn-pomodoro"
+          >
+            专注
+          </button>
+          <button class="mode-btn" data-mode="shortBreak" id="btn-short">
+            短休息
+          </button>
+          <button class="mode-btn" data-mode="longBreak" id="btn-long">
+            长休息
+          </button>
+        </div>
+      </header>
+
+      <div class="timer-container">
+        <!-- SVG Circle Progress -->
+        <svg class="progress-ring" width="300" height="300">
+          <circle
+            class="progress-ring__circle-bg"
+            stroke="rgba(255,255,255,0.1)"
+            stroke-width="8"
+            fill="transparent"
+            r="140"
+            cx="150"
+            cy="150"
+          />
+          <circle
+            class="progress-ring__circle"
+            stroke="white"
+            stroke-width="8"
+            fill="transparent"
+            r="140"
+            cx="150"
+            cy="150"
+          />
+        </svg>
+
+        <div class="timer-display">
+          <span id="minutes">25</span><span class="colon">:</span
+          ><span id="seconds">00</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="start-pause" class="control-btn primary">开始</button>
+        <button id="reset" class="control-btn secondary" aria-label="重启">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 12C4 16.4183 7.58172 20 12 20C14.1502 20 16.1022 19.1517 17.5684 17.7716"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M20 12C20 7.58172 16.4183 4 12 4C9.61061 4 7.46589 5.05661 5.99999 6.74444"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5 2V7H10"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <footer>
+        <div class="today-count">
+          今日专注次数: <span id="pomodoro-count">0</span>
+        </div>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
